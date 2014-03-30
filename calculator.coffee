@@ -3,8 +3,10 @@ _ = require "underscore"
 class Calculator
     constructor: ->
         @salaries  = require "./data/salaries.json"                 
+        @coeffs    = require "./data/coeff-cities.json"  
+        @spo       = require "./data/spo.json"  
 
-    getSalary: (jobId, sex, age)=>
+    getSalary: (jobId, sex, age, city)=>
         # Find the job
         job   = _.findWhere @salaries, id_metier: jobId
         # On letter convertion of the sex
@@ -12,9 +14,22 @@ class Calculator
         # Get the range of the given age
         range = @getAgeRange(age)
         # Stop here if a part of the key is missing
-        return unless job? and sex? and range?
-        # Create the key to get the data and get them
-        job[ range + "_" + sex ]
+        return unless job? and sex? and range?        
+        # If a city is given we look for the its coefficient for this SPO
+        coeff = if city? then 1*@getCitySpoCoeff(city, sex, job.id_spo) else 1
+        # Create the key to get the data and get them        
+        salary : job[ range + "_" + sex ] * coeff, spo : job.id_spo, coeff: coeff
+            
+    getCitySpoCoeff: (cityId, sex, spoId)=>
+        # File nomenclature adaptation
+        sex  = if sex is "m" then "h" else sex
+        # Build the slug to retreive the coeff 
+        slug = sex.toUpperCase() + "_" + @spo[spoId]
+        # Find the city
+        city = _.findWhere @coeffs, CODGEO: cityId     
+        # Convert french number format to machine readable format         
+        if city? then city[slug].replace(",", ".") else 1        
+
 
     getAgeRanges: =>
         # No range until @salaries isn't empty
