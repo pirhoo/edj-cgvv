@@ -9,6 +9,7 @@
     "express": "3.5.1",
     "coffee-script": "~1.7.1",
     "underscore": "~1.6.0",
-    "foreman": "0.0.26"
+    "foreman": "0.0.26",
+    "cors": "~2.2.0"
   }
 }

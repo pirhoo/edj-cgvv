@@ -1,10 +1,13 @@
-express    = require('express');
+cors       = require('cors')
+express    = require('express')
 # The Calculator class manages every calculations
 Calculator = require("./calculator")
 # Create an instance of the calcultor (that does calculation for us...)
 calculator = new Calculator()
 # Create a simple express app
 app = do express
+# This application allows CORS
+app.use cors() 
 # Main getSalary(and only) route
 app.get '/:job/:sex/:age/:city?', (req, res)->    
     # Params shortcuts
