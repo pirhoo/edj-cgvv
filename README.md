@@ -8,12 +8,12 @@ projet Combien gagne votre voisin.
 Pour retourner le salaire moyen d'un age, d'un sexe et d'une profession donnée, 
 utilisez la syntaxe suivante :
 
-```
+```http
 GET http://edj-cgvv.herokuapp.com/:job/:sex/:age/
 ```
 
 Par exemple pour obtenir le salaire d'un jardinier de 25 ans :
-```
+```http
 GET http://edj-cgvv.herokuapp.com/631a/male/25/
 ```
 
