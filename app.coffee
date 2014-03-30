@@ -8,7 +8,7 @@ calculator = new Calculator()
 app = do express
 # This application allows CORS
 app.use cors() 
-# Main getSalary(and only) route
+# Main (and only) route
 app.get '/:job/:sex/:age/:city?', (req, res)->    
     # Params shortcuts
     params = req.params
