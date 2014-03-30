@@ -24,3 +24,35 @@ GET http://edj-cgvv.herokuapp.com/631a/male/25/
   "coeff": 1
 }
 ```
+
+Vous obtenir un salaire plus précis selon la ville, ajouter le code INSEE de la
+commune à la fin de votre URL :
+
+```http
+GET http://edj-cgvv.herokuapp.com/631a/male/34/77111
+```
+
+```
+{
+  "salary": 16233.846153196799,
+  "spo": 61,
+  "coeff": 1.0256410256
+}
+```
+
+## Utilisation avec Angular
+
+Avec Angular, vous pouvez récupérer les données depuis votre controlleur de cette façon:
+
+```js
+function SalaryCtrl($http, $scope) {
+
+    $http.get("http://edj-cgvv.herokuapp.com/631a/male/25/").success(function(data) {    
+        $scope.salary = data;
+    });    
+
+    // ...
+}
+
+SalaryCtrl.$inject = ["$http", "$scope"]
+```
