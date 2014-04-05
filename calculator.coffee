@@ -7,16 +7,16 @@ class Calculator
         @spo       = require "./data/spo.json"  
         @cities    = require "./data/insee-cities.json"  
 
-    getSalary: (jobId, sex, age, city)=>
-        city   = _.findWhere @cities, insee_com: city          
-        # Stops here if the city doesn't exist
-        return unless city?
+    getSalary: (jobId, sex, age, cityOrRegion)=>
+        city   = _.findWhere @cities, insee_com: cityOrRegion          
+        # Use the code as a region if any city match
+        region = if city? then city.code_reg else cityOrRegion
         # Find the job
-        job    = _.findWhere @salaries, { id_metier: jobId, id_region: city.code_reg }         
+        job    = _.findWhere @salaries, { id_metier: jobId, id_region: 1*region }         
         # On letter convertion of the sex
         sex    = if sex is "male" then "m" else "f"
         # Get the range of the given age
-        range  = @getAgeRange(age)
+        range  = @getAgeRange(age)                
         # Stop here if a part of the key is missing
         return unless job? and sex? and range?        
         # If a city is given we look for the its coefficient for this SPO

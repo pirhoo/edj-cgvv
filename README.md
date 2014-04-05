@@ -9,12 +9,12 @@ Pour retourner le salaire moyen d'un age, d'un sexe et d'une profession donnée,
 utilisez la syntaxe suivante :
 
 ```http
-GET http://edj-cgvv.herokuapp.com/:job/:sex/:age/
+GET http://edj-cgvv.herokuapp.com/:job/:sex/:age/:cityOrRegion/
 ```
 
-Par exemple pour obtenir le salaire d'un jardinier de 25 ans :
+Par exemple pour obtenir le salaire d'un jardinier de 25 ans dans la Drôme :
 ```http
-GET http://edj-cgvv.herokuapp.com/631a/male/25/
+GET http://edj-cgvv.herokuapp.com/631a/male/25/26
 ```
 
 ```
@@ -22,21 +22,6 @@ GET http://edj-cgvv.herokuapp.com/631a/male/25/
   "salary": 13927,
   "spo": 61,
   "coeff": 1
-}
-```
-
-Vous obtenir un salaire plus précis selon la ville, ajouter le code INSEE de la
-commune à la fin de votre URL :
-
-```http
-GET http://edj-cgvv.herokuapp.com/631a/male/34/77111
-```
-
-```
-{
-  "salary": 16233.846153196799,
-  "spo": 61,
-  "coeff": 1.0256410256
 }
 ```
 
