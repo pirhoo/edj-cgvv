@@ -9,13 +9,13 @@ app = do express
 # This application allows CORS
 app.use cors() 
 # Main (and only) route
-app.get '/:job/:sex/:age/:city?', (req, res)->    
+app.get '/:job/:sex/:age/:city', (req, res)->    
     # Params shortcuts
     params = req.params
     # Use the calculator
     salary = calculator.getSalary params.job, params.sex, params.age, params.city
     # Returns 404 if we didn't find the salary
-    if salary? then res.json(salary) else res.send 404, "Unkown profile"
+    if salary? then res.json(salary) else res.json error: "Unkown profile"
 
 # Then start listening
 server = app.listen process.env.PORT or 3000

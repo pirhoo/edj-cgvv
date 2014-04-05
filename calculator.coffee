@@ -5,18 +5,22 @@ class Calculator
         @salaries  = require "./data/salaries.json"                 
         @coeffs    = require "./data/coeff-cities.json"  
         @spo       = require "./data/spo.json"  
+        @cities    = require "./data/insee-cities.json"  
 
     getSalary: (jobId, sex, age, city)=>
+        city   = _.findWhere @cities, insee_com: city          
+        # Stops here if the city doesn't exist
+        return unless city?
         # Find the job
-        job   = _.findWhere @salaries, id_metier: jobId
+        job    = _.findWhere @salaries, { id_metier: jobId, id_region: city.code_reg }         
         # On letter convertion of the sex
-        sex   = if sex is "male" then "m" else "f"
+        sex    = if sex is "male" then "m" else "f"
         # Get the range of the given age
-        range = @getAgeRange(age)
+        range  = @getAgeRange(age)
         # Stop here if a part of the key is missing
         return unless job? and sex? and range?        
         # If a city is given we look for the its coefficient for this SPO
-        coeff = if city? then 1*@getCitySpoCoeff(city, sex, job.id_spo) else 1
+        coeff  = @getCitySpoCoeff(city, sex, job.id_spo)
         # Create the key to get the data and get them        
         salary : job[ range + "_" + sex ] * coeff, spo : job.id_spo, coeff: coeff
             
