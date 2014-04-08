@@ -49,17 +49,18 @@ class Calculator
 
     getAgeRange: (age)=>
         ranges  = @getAgeRanges()
+        age     = parseInt(age)
         # Take the younger by default
         res     = ranges[0]
         lastIdx = ranges.length - 1
         # Fetch all range
-        for range, idx in ranges  
+        for range, idx in ranges              
             # Is the older one
-            if res > ranges[0] and idx is lastIdx
+            if idx is lastIdx and range < age
                 res = ranges[lastIdx]
                 break
             # Current range is smaller than the age and next range is bigger
-            if range <= age and ranges[idx+1] > age
+            if 1*range <= age and 1*ranges[idx+1] > age                
                 res = range 
                 break
         res
